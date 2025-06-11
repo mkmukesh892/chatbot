@@ -1,12 +1,12 @@
 <div class="chat-container">
   <div class="messages">
-    @for(msg of messages; track msg){
+    @for(msg of messages; track msg;){
     <div [ngClass]="{'user': msg.sender === 'user', 'bot': msg.sender === 'bot'}">
       <strong>{{msg.sender}}: </strong> <pre class="message-txt">{{msg.text}}</pre>
     </div>
-    @if(loading && msg.sender ==='bot'){
-  <div class="bot">Bot is typing...</div>
   }
+   @if(loading){
+  <div class="bot">Bot is typing...</div>
   }
   </div>
   <form (ngSubmit)="sendMessage()">
