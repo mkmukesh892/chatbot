@@ -14,7 +14,7 @@
 }
 .user {
   text-align: right;
-  color: blue;
+  color: rgb(153, 255, 0);
 }
 .bot {
   text-align: left;
