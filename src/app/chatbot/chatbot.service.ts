@@ -1,11 +1,11 @@
-import { HttpClient } from "@angular/common/http"
-import { inject, Injectable } from "@angular/core"
+import { Injectable } from "@angular/core";
+
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
-export class ChatBotService{
-    private http = inject(HttpClient);
-    getAIResponse(userMsg: string){
-        return this.http.post<any>('http://localhost:8080/api/chat', { question: userMsg });
-    }
+export class ChatBotService {
+  getStreamedAIResponse(userMsg: string): EventSource {
+    const params = new URLSearchParams({question: userMsg});
+    return new EventSource(`http://localhost:8080/api/chat/stream?${params.toString()}`);
+  }
 }
