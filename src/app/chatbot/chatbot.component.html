@@ -2,15 +2,15 @@
   <div class="messages">
     @for(msg of messages; track msg){
     <div [ngClass]="{'user': msg.sender === 'user', 'bot': msg.sender === 'bot'}">
-      <strong>{{msg.sender}}:</strong> <pre>{{msg.text}}</pre>
+      <strong>{{msg.sender}}: </strong> <pre class="message-txt">{{msg.text}}</pre>
     </div>
+    @if(loading && msg.sender ==='bot'){
+  <div class="bot">Bot is typing...</div>
+  }
   }
   </div>
   <form (ngSubmit)="sendMessage()">
     <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" />
     <button type="submit">Send</button>
   </form>
-  @if(loading){
-  <div>Bot is typing...</div>
-  }
 </div>

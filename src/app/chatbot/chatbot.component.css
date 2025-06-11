@@ -42,3 +42,7 @@ button {
     background-color: #551b98;
   }
 }
+
+.message-txt{
+  display: inline-block !important;
+}
