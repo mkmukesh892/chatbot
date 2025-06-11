@@ -1,16 +1,20 @@
 <div class="chat-container">
   <div class="messages">
-    @for(msg of messages; track msg;){
-    <div [ngClass]="{'user': msg.sender === 'user', 'bot': msg.sender === 'bot'}">
-      <strong>{{msg.sender}}: </strong> {{msg.text}}
+  <div *ngFor="let msg of messages" class="message-row" [ngClass]="msg.sender">
+    <div class="icon">
+      <i *ngIf="msg.sender === 'bot'" class="fas fa-robot fa-flip-horizontal"></i>
+      <i *ngIf="msg.sender === 'user'" class="fas fa-user"></i>
     </div>
-  }
-   @if(loading){
-  <div class="bot">Bot is typing...</div>
-  }
+    <div class="message-bubble">
+      {{ msg.text }}
+    </div>
+    @if(loading){
+      <div>Bot is typing ....</div>
+    }
+  </div>
   </div>
   <form (ngSubmit)="sendMessage()">
-    <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" />
+    <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" placeholder="Type your message...">
     <button type="submit">Send</button>
   </form>
 </div>
