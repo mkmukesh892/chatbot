@@ -8,4 +8,5 @@
     <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" />
     <button type="submit">Send</button>
   </form>
+  <div *ngIf="loading">Bot is typing...</div>
 </div>

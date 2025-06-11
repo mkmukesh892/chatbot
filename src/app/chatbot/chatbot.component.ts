@@ -23,10 +23,10 @@ export class ChatbotComponent {
       const userMsg = this.userInput;
       this.messages.push({ sender: 'user', text: userMsg });
       this.loading = true;
-      this.http.post<any>('http://localhost:3000/api/chat', { message: userMsg })
+      this.http.post<any>('http://localhost:8080/api/chat', { message: userMsg })
         .subscribe({
           next: (res) => {
-            this.messages.push({ sender: 'bot', text: res.reply });
+            this.messages.push({ sender: 'bot', text: res.response });
             this.loading = false;
           },
           error: () => {
