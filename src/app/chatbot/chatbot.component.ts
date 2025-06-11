@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ChatBotService } from './chatbot.service';
 
 @Component({
   selector: 'app-chatbot',
@@ -16,14 +17,14 @@ export class ChatbotComponent {
   userInput = '';
   loading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private chatbotService: ChatBotService) {}
 
   sendMessage() {
     if (this.userInput.trim()) {
       const userMsg = this.userInput;
       this.messages.push({ sender: 'user', text: userMsg });
       this.loading = true;
-      this.http.post<any>('http://localhost:8080/api/chat', { message: userMsg })
+      this.chatbotService.getAIResponse(userMsg)
         .subscribe({
           next: (res) => {
             this.messages.push({ sender: 'bot', text: res.response });

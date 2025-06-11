@@ -1,12 +1,16 @@
 <div class="chat-container">
   <div class="messages">
-    <div *ngFor="let msg of messages" [ngClass]="{'user': msg.sender === 'user', 'bot': msg.sender === 'bot'}">
+    @for(msg of messages; track msg){
+    <div [ngClass]="{'user': msg.sender === 'user', 'bot': msg.sender === 'bot'}">
       <strong>{{msg.sender}}:</strong> {{msg.text}}
     </div>
+  }
   </div>
   <form (ngSubmit)="sendMessage()">
     <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" />
     <button type="submit">Send</button>
   </form>
-  <div *ngIf="loading">Bot is typing...</div>
+  @if(loading){
+  <div>Bot is typing...</div>
+  }
 </div>
