@@ -1,20 +1,33 @@
-<div class="chat-container">
-  <div class="messages">
-  <div *ngFor="let msg of messages" class="message-row" [ngClass]="msg.sender">
-    <div class="icon">
-      <i *ngIf="msg.sender === 'bot'" class="fas fa-robot fa-flip-horizontal"></i>
-      <i *ngIf="msg.sender === 'user'" class="fas fa-user"></i>
+<div class="chatbot-wrapper">
+  <div class="header">{{ title }}</div>
+  <div class="chat-container">
+    <div class="messages">
+      <div *ngFor="let msg of messages" class="message-row" [ngClass]="msg.sender">
+        <div class="icon" [ngClass]="{'icon-user': msg.sender === 'user', 'icon-bot': msg.sender === 'bot'}">
+          <i *ngIf="msg.sender === 'bot'" class="fas fa-robot fa-flip-horizontal"></i>
+          <i *ngIf="msg.sender === 'user'" class="fas fa-user"></i>
+        </div>
+        <div class="chat-bubble" style="white-space: pre-wrap;" [ngClass]="{'chat-bubble-user': msg.sender === 'user', 'chat-bubble-bot': msg.sender === 'bot'}">
+          {{ msg.text }}
+        </div>
+      </div>
+      @if(loading){
+        <div class="message-row">
+          <div class="icon icon-bot">
+            <i class="fas fa-robot fa-flip-horizontal"></i>
+          </div>
+          <div class="chat-bubble chat-bubble-bot bot-typing typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      }
     </div>
-    <div class="message-bubble">
-      {{ msg.text }}
-    </div>
-    @if(loading){
-      <div>Bot is typing ....</div>
-    }
+    <form (ngSubmit)="sendMessage()">
+      <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" placeholder="Type your message...">
+      <button type="submit">Send</button>
+    </form>
   </div>
-  </div>
-  <form (ngSubmit)="sendMessage()">
-    <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" placeholder="Type your message...">
-    <button type="submit">Send</button>
-  </form>
 </div>
+

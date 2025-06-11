@@ -11,6 +11,7 @@ import { ChatBotService } from './chatbot.service';
   styleUrl: './chatbot.component.css'
 })
 export class ChatbotComponent {
+  title='ECHO – Enterprise Chatbot for Help & Operations';
   messages = [
     { sender: 'bot', text: 'Hello! How can I help you?' }
   ];
@@ -27,7 +28,8 @@ export class ChatbotComponent {
       this.chatbotService.getAIResponse(userMsg)
         .subscribe({
           next: (res) => {
-            this.messages.push({ sender: 'bot', text: res.response });
+            const response = res.response;
+            this.messages.push({ sender: 'bot', text: response });
             this.loading = false;
           },
           error: () => {
