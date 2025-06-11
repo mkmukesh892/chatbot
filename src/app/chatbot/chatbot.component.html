@@ -2,7 +2,7 @@
   <div class="messages">
     @for(msg of messages; track msg){
     <div [ngClass]="{'user': msg.sender === 'user', 'bot': msg.sender === 'bot'}">
-      <strong>{{msg.sender}}:</strong> {{msg.text}}
+      <strong>{{msg.sender}}:</strong> <pre>{{msg.text}}</pre>
     </div>
   }
   </div>
