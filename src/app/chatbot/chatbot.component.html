@@ -1,8 +1,9 @@
 <div>
-  <div class="header">{{ title }}</div>
+  <div class="header">{{ title() }}</div>
   <div class="chat-container">
     <div class="messages">
-        <div *ngFor="let msg of messages" class="message-row" [ngClass]="msg.sender">
+      @for(msg of messages(); track msg){
+        <div class="message-row" [ngClass]="msg.sender">
           @if(msg.sender === 'bot' && msg.text.length === 0) {
             <div class="message-row" *ngIf="msg.sender === 'bot' && msg.text.length === 0">
               <div class="icon icon-bot">
@@ -24,6 +25,7 @@
           </div>
         }
         </div>
+      }
     </div>
     <form (ngSubmit)="sendMessage()">
       <input [(ngModel)]="userInput" name="userInput" required autocomplete="off" placeholder="Type your message...">

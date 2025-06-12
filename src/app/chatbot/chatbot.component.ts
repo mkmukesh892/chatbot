@@ -1,7 +1,8 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatBotService } from './chatbot.service';
+import { IMessage } from './chatbot.modal';
 
 @Component({
   selector: 'app-chatbot',
@@ -11,10 +12,10 @@ import { ChatBotService } from './chatbot.service';
   styleUrls: ['./chatbot.component.css']
 })
 export class ChatbotComponent {
-  title='ECHO – Enterprise Chatbot for Help & Operations';
-  messages = [
+  title= signal('ECHO – Enterprise Chatbot for Help & Operations');
+  messages = signal<IMessage[]>([
     { sender: 'bot', text: 'Hello! How can I help you?' }
-  ];
+  ]);
   userInput = '';
   loading = false;
 
@@ -27,9 +28,9 @@ export class ChatbotComponent {
     if (!this.userInput.trim()) return;
 
     const userMsg = this.userInput;
-    this.messages.push({ sender: 'user', text: userMsg });
+    this.messages.set([...this.messages(),{ sender: 'user', text: userMsg }]);
     const botMsg = { sender: 'bot', text: '' };
-    this.messages.push(botMsg);
+    this.messages.set([...this.messages(),botMsg]);
 
     this.loading = true;
     this.userInput = '';
