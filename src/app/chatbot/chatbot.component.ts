@@ -1,4 +1,4 @@
-import { Component, NgZone, signal } from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, NgZone, signal, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ChatBotService } from './chatbot.service';
@@ -11,7 +11,8 @@ import { IMessage } from './chatbot.modal';
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css']
 })
-export class ChatbotComponent {
+export class ChatbotComponent implements AfterViewChecked {
+  @ViewChild('messagesEnd') private messagesEnd!: ElementRef;
   title= signal('ECHO – Enterprise Chatbot for Help & Operations');
   messages = signal<IMessage[]>([
     { sender: 'bot', text: 'Hello! How can I help you?' }
@@ -23,6 +24,17 @@ export class ChatbotComponent {
     private chatbotService: ChatBotService,
     private zone: NgZone
   ) {}
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  private scrollToBottom(): void {
+    if (this.messagesEnd) {
+      this.messagesEnd.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
 
   sendMessage() {
     if (!this.userInput.trim()) return;
